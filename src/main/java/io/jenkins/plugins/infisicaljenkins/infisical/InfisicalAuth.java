@@ -16,11 +16,13 @@ public class InfisicalAuth implements Serializable {
 
     public String loginWithUniversalAuth(
             String infisicalUrl, String machineIdentityClientId, String machineIdentityClientSecret) {
-        HttpsURLConnection connection = null;
+        HttpURLConnection connection = null;
         try {
             // Create the URL, and append "/api/v1/auth/universal-auth/login" to it
             URL url = new URL(infisicalUrl + "/api/v1/auth/universal-auth/login");
-            connection = (HttpsURLConnection) url.openConnection();
+
+            if (infisicalUrl.contains("https")) connection = (HttpsURLConnection) url.openConnection();
+            else connection = (HttpURLConnection) url.openConnection();
 
             // Set request method to POST
             connection.setRequestMethod("POST");
